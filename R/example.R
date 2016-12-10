@@ -4,10 +4,13 @@ if(FALSE) {
 
 url <- "http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953&sortBy=SortIndex"
 ads <- list_advertisements(url, advertisement_type = "individuals", max_pages = 5)
+ads
 
-
-test <- scrape_advertisement(ads$url[1])
+test <- scrape_advertisement(ad_id = "m1108584675")
 test
+
+test2 <- scrape_advertisement(ad_id = "m1116249032")
+head(test2)
 
 }
 
