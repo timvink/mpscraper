@@ -1,13 +1,24 @@
 
-scrape_advertisement <- function(adv_url) {
+#' Scrape advertisement
+#'
+#' Collects a set of features from a given advertisement id
+#'
+#' @param id The ID of a marktplaats advertisement
+#'
+#' @return a data.frame with features collected from the ad
+#' @export
+#'
+scrape_advertisement <- function(id) {
   # Get html for the page
-  adv_html <- adv_url %>% xml2::read_html()
+  adv_html <- sprintf("http://marktplaats.nl/%s", id) %>%
+    xml2::read_html()
 
   # Only get add if still available
   if(check_adv_available(adv_html)) {
     # Get details and return
-    data.frame(adv_url = adv_url) %>%
+    data.frame(id = id) %>%
       dplyr::mutate(
+        # todo add the title
         price = get_css_element(adv_html, "#vip-ad-price-container .price"),
         views = get_css_element(adv_html, "#view-count", as_numeric = TRUE),
         favorites = get_css_element(adv_html, "#favorited-count", as_numeric = TRUE),
