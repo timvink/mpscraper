@@ -1,4 +1,7 @@
 # mpscraper: A Marktplaats scraper for R
+=====
+
+[![Build Status](https://travis-ci.org/timvink/mpscraper.svg?branch=master)](https://travis-ci.org/timvink/mpscraper)
 
 This R package enables you to web scrape an individual [marktplaats](http://www.marktplaats.nl/) advertisement or all advertisements related to a search query. 
 If you want to analyse your own advertisements, you could consider the [official Marktplaats API](). If you are more familiar with javascript, have a look at [manuelvanrijn/mp-scraper](https://github.com/manuelvanrijn/mp-scraper).
