@@ -2,7 +2,11 @@
 
 if(FALSE) {
 
+library(mpscraper)
+library(tidyverse)
+
 url <- "http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953&sortBy=SortIndex"
+
 ads <- list_advertisements(url, advertisement_type = "individuals", max_pages = 5)
 ads
 
@@ -10,6 +14,8 @@ test <- scrape_advertisement(ad_id = "m1116224541")
 test
 
 test2 <- scrape_advertisement(ad_id = "m1116309415")
+
+test2 <- scrape_advertisement(ad_id = "m1116249032")
 head(test2)
 
 test2 <- scrape_advertisement(ad_id = "a1011385991")
