@@ -14,7 +14,7 @@ NULL
 #' @return a data.frame with features collected from the ad
 #' @export
 #' 
-scrape_advertisement <- function(ad_id, 
+scrape_advertisement <- function(ad_id,
                                  wait_time = 0,
                                  number_of_tries = 1,
                                  verbose = F) {
@@ -96,6 +96,7 @@ scrape_advertisement <- function(ad_id,
   # Get details and return
   ad_data <- tibble::data_frame(id = ad_id) %>%
     dplyr::mutate(
+      time_retrieved = Sys.time(), 
       title = get_css_element(adv_html, "#title"),
       price = get_css_element(adv_html, "#vip-ad-price-container .price"),
       views = get_css_element(adv_html, "#view-count", as_numeric = TRUE),

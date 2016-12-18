@@ -1,10 +1,9 @@
 # mpscraper: A Marktplaats scraper for R
-=====
 
 [![Build Status](https://travis-ci.org/timvink/mpscraper.svg?branch=master)](https://travis-ci.org/timvink/mpscraper)
 
 This R package enables you to web scrape an individual [marktplaats](http://www.marktplaats.nl/) advertisement or all advertisements related to a search query. 
-If you want to analyse your own advertisements, you could consider the [official Marktplaats API](). If you are more familiar with javascript, have a look at [manuelvanrijn/mp-scraper](https://github.com/manuelvanrijn/mp-scraper).
+If you want to analyse your own advertisements, you could consider the [official Marktplaats API]().
 
 ## Installation
 
@@ -29,32 +28,35 @@ ads <- list_advertisements(url, advertisement_type = "individuals", max_pages = 
 all_ad_data <- scrape_ads(ads$adv_id)
 ```
 
+Note that you can find the URL of an ad using the id: `http://www.marktplaats.nl/<id>`.
+
 ## List of advertisement features returned
 
-  - ID 
-  - title
-	- price
-	- number of views
-	- number of favorites
-	- displayed since
-	- shipping information
-	- shipping costs
-	- reserved
-	- <categories 1 - 3>
-	- counterparty name
-	- counterparty id
-	- counterparty number of advertisements
-	- counterparty contact preferences
-	- counterparty has website
-	- counterparty telephone number
-	- counterparty active since
-	- counterparty location
-	- biddings enabled
-	- biddings number
-	- biddings highest
-	- biddings lowest
-	- biddings number of unique bidders
-	- <product attributes>
+- ID
+- timestamp information retrieved
+- title
+- price
+- number of views
+- number of favorites
+- displayed since
+- shipping information
+- shipping costs
+- reserved
+- categories 1,2,3
+- counterparty name
+- counterparty id
+- counterparty number of advertisements
+- counterparty contact preferences
+- counterparty has website
+- counterparty telephone number
+- counterparty active since
+- counterparty location
+- biddings enabled
+- biddings number
+- biddings highest
+- biddings lowest
+- biddings number of unique bidders
+- product attributes
 
 ## Contribute
 
