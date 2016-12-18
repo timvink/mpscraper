@@ -20,13 +20,13 @@
 #'
 #' @export
 #' @examples
-#'
+#' \dontrun{
 #' get_css_element(
 #'    html = read_html('http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953'),
 #'    css = '.price-new',
 #'    expecting_one = F
 #' )
-#'
+#' }
 get_css_element <- function(html, css, remove_chars = c(), as_numeric = FALSE, expecting_one = TRUE) {
   # Get css element from html
   element <- html %>%
@@ -68,9 +68,9 @@ get_css_element <- function(html, css, remove_chars = c(), as_numeric = FALSE, e
 #' @return a numeric object.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' get_n_of_advs_of_counterparty(html = read_html('http://www.marktplaats.nl/a/telecommunicatie/mobiele-telefoons-apple-iphone/m1106778417-apple-telefoon-4s.html'))
-#'
+#' }
 get_n_of_advs_of_counterparty <- function(html) {
   # Get urls to cp site
   urls <- html %>%
@@ -102,9 +102,9 @@ get_n_of_advs_of_counterparty <- function(html) {
 #' @return a boolean.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' check_adv_available(html = read_html('http://www.marktplaats.nl/a/telecommunicatie/mobiele-telefoons-apple-iphone/m1106778417-apple-telefoon-4s.html'))
-#'
+#' }
 check_adv_available <- function(html) {
   not_found <- html %>%
     rvest::html_nodes(".evip-caption") %>%

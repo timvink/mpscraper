@@ -33,12 +33,12 @@ The function uses a css string to extract information from a specific html
 node of a html page.
 }
 \examples{
-
+\dontrun{
 get_css_element(
    html = read_html('http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953'),
    css = '.price-new',
    expecting_one = F
 )
-
+}
 }
 

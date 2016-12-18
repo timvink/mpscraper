@@ -22,8 +22,8 @@ The function uses the html of a marktplaats advertisement to get the
 url for each of images linked to that advertisment.
 }
 \examples{
-
+\dontrun{
 get_urls_to_adv_images(html = read_html('http://www.marktplaats.nl/a/telecommunicatie/mobiele-telefoons-apple-iphone/m1106778417-apple-telefoon-4s.html'))
-
+}
 }
 

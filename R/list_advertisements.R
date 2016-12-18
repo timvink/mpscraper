@@ -10,10 +10,10 @@
 #' @return a data frame with title, url and ID of advertisements
 #'
 #' @examples
-#'
+#' \dontrun{
 #' url <- "http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953&sortBy=SortIndex"
 #' list_advertisements(url, advertisement_type = "individuals", max_pages = 5)
-#'
+#' }
 list_advertisements <- function(url,
                                 advertisement_type = c("both", "individuals", "companies"),
                                 max_pages = Inf) {
@@ -40,30 +40,3 @@ list_advertisements <- function(url,
          companies = dplyr::filter(advs_data, grepl("a",adv_id)))
 
 }
-
-
-# what zijn admarkt ads?
-
-
-
-
-# Define settings
-settings <- list(
-  # Define marktplaats url for iphone
-  url_marktplaats_search = "http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953&sortBy=SortIndex",
-  # Define css selectors for adv scraping wrapper
-  css_price = "#vip-ad-price-container .price",
-  css_view_count = "#view-count",
-  css_favoured_count = "#favorited-count",
-  css_displayed_since = "#displayed-since span:nth-child(3)",
-  css_shipping_details = ".shipping-details-value:nth-child(2)",
-  css_counterparty = ".top-info .name",
-  css_cp_active_since = "#vip-active-since span",
-  css_cp_location = "#vip-seller-location",
-  css_attribute_names = "#vip-ad-attributes .name",
-  css_attribute_values = "#vip-ad-attributes .value",
-  css_description = "#vip-ad-description",
-  css_bidder = "#vip-bids-top .ellipsis",
-  css_bid_amount = ".bid-amount",
-  css_bid_date = ".bid-date"
-)

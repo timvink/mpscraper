@@ -22,8 +22,8 @@ The function uses the html of a marktplaats advertisement to determine
 whether the advertisement is still available or whether it has been removed.
 }
 \examples{
-
+\dontrun{
 check_adv_available(html = read_html('http://www.marktplaats.nl/a/telecommunicatie/mobiele-telefoons-apple-iphone/m1106778417-apple-telefoon-4s.html'))
-
+}
 }
 

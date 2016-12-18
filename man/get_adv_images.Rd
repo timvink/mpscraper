@@ -24,11 +24,11 @@ The function uses a string containing the url to an advertisement to download
 and store all images linked to that advertisement.
 }
 \examples{
-
+\dontrun{
 get_adv_images(
    adv_url = 'http://www.marktplaats.nl/a/telecommunicatie/mobiele-telefoons-apple-iphone/m1106778417-apple-telefoon-4s.html',
    storage_dir = "C:/"
 )
-
+}
 }
 

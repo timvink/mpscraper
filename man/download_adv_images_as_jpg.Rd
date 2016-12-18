@@ -28,12 +28,12 @@ advertisement, to loop over each url to download the image and store it in
 the specified directory.
 }
 \examples{
-
+\dontrun{
 download_adv_images_as_jpg(
    images = c('//i.marktplaats.com/00/s/NzIwWDk2MA==/z/zH8AAOSwcUBYJalk/$_84.JPG'),
    storage_dir = "C:/",
    prefix = 'm1106778417'
 )
-
+}
 }
 

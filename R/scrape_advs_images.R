@@ -14,9 +14,9 @@
 #'   
 #' @export
 #' @examples
-#' 
+#' \dontrun{
 #' get_urls_to_adv_images(html = read_html('http://www.marktplaats.nl/a/telecommunicatie/mobiele-telefoons-apple-iphone/m1106778417-apple-telefoon-4s.html'))
-#' 
+#' }
 get_urls_to_adv_images <- function(html) {
   html %>% 
     html_nodes("#vip-gallery") %>% 
@@ -46,13 +46,13 @@ get_urls_to_adv_images <- function(html) {
 #'   
 #' @export
 #' @examples
-#' 
+#' \dontrun{
 #' download_adv_images_as_jpg(
 #'    images = c('//i.marktplaats.com/00/s/NzIwWDk2MA==/z/zH8AAOSwcUBYJalk/$_84.JPG'),
 #'    storage_dir = "C:/",
 #'    prefix = 'm1106778417'
 #' )
-#' 
+#' }
 download_adv_images_as_jpg <- function(images,storage_dir,prefix) {
   # Determine number of images to store
   n_images <- length(images)
@@ -85,12 +85,12 @@ download_adv_images_as_jpg <- function(images,storage_dir,prefix) {
 #'   
 #' @export
 #' @examples
-#' 
+#' \dontrun{
 #' get_adv_images(
 #'    adv_url = 'http://www.marktplaats.nl/a/telecommunicatie/mobiele-telefoons-apple-iphone/m1106778417-apple-telefoon-4s.html',
 #'    storage_dir = "C:/"
 #' )
-#' 
+#' }
 get_adv_images <- function(adv_url, storage_dir = "") {
   # Get html for the page
   adv_html <- adv_url %>% 

@@ -22,9 +22,9 @@ a data frame with title, url and ID of advertisements
 Lists the advertisements listed for a given search url
 }
 \examples{
-
+\dontrun{
 url <- "http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953&sortBy=SortIndex"
 list_advertisements(url, advertisement_type = "individuals", max_pages = 5)
-
+}
 }
 
