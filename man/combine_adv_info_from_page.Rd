@@ -30,12 +30,4 @@ data.frame object, while also extracting the advertisement ids from the urls
 and optionally filtering admarkt advertisements (which are payed
 advertisements from companies)
 }
-\examples{
-
-combine_adv_info_from_page(
-   titles = c("Adv A","Adv B"),
-   urls = c("https://url_A","https://url_B")
-)
-
-}
 

@@ -22,9 +22,4 @@ The function uses the html of a marktplaats advertisement to get the total
 number of advertisements that the counterparty of the advertisement is
 hosting on marktplaats.
 }
-\examples{
-\dontrun{
-get_n_of_advs_of_counterparty(html = read_html('http://www.marktplaats.nl/a/telecommunicatie/mobiele-telefoons-apple-iphone/m1106778417-apple-telefoon-4s.html'))
-}
-}
 

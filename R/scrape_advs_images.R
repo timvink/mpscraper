@@ -1,3 +1,5 @@
+#' @importFrom magrittr "%>%"
+NULL
 
 #' Get urls to adv images
 #' 
@@ -12,16 +14,12 @@
 #'   
 #' @return a vector object containing strings.
 #'   
-#' @examples
-#' \dontrun{
-#' get_urls_to_adv_images(html = read_html('http://www.marktplaats.nl/a/telecommunicatie/mobiele-telefoons-apple-iphone/m1106778417-apple-telefoon-4s.html'))
-#' }
 get_urls_to_adv_images <- function(html) {
   html %>% 
-    html_nodes("#vip-gallery") %>% 
-    html_nodes(".carousel") %>% 
-    html_attr("data-images-l") %>% 
-    str_split("&") %>% 
+    rvest::html_nodes("#vip-gallery") %>% 
+    rvest::html_nodes(".carousel") %>% 
+    rvest::html_attr("data-images-l") %>% 
+    stringr::str_split("&") %>% 
     unlist() %>% 
     return()
 }
@@ -42,23 +40,22 @@ get_urls_to_adv_images <- function(html) {
 #'   images.
 #'   
 #' @return No return.
-#'   
-#' @examples
-#' \dontrun{
-#' download_adv_images_as_jpg(
-#'    images = c('//i.marktplaats.com/00/s/NzIwWDk2MA==/z/zH8AAOSwcUBYJalk/$_84.JPG'),
-#'    storage_dir = "C:/",
-#'    prefix = 'm1106778417'
-#' )
-#' }
+#' 
 download_adv_images_as_jpg <- function(images,storage_dir,prefix) {
+  
+  # download_adv_images_as_jpg(
+  #       images = c('//i.marktplaats.com/00/s/NzIwWDk2MA==/z/zH8AAOSwcUBYJalk/$_84.JPG'),
+  #       storage_dir = "C:/",
+  #       prefix = 'm1106778417'
+  #    )
+  
   # Determine number of images to store
   n_images <- length(images)
   # Create set of locations to save to
   image_files <- paste0(storage_dir,"/",prefix,"_",1:n_images,".jpg")
   # Download and save each file
   for(i in 1:n_images) {
-    download.file(
+    utils::download.file(
       url = paste0("http:",images[i]),
       destfile = image_files[i],
       quiet = TRUE,
@@ -80,18 +77,11 @@ download_adv_images_as_jpg <- function(images,storage_dir,prefix) {
 #'   images.
 #'   
 #' @return No return.
-#'   
-#' @examples
-#' \dontrun{
-#' get_adv_images(
-#'    adv_url = 'http://www.marktplaats.nl/a/telecommunicatie/mobiele-telefoons-apple-iphone/m1106778417-apple-telefoon-4s.html',
-#'    storage_dir = "C:/"
-#' )
-#' }
+#' 
 get_adv_images <- function(adv_url, storage_dir = "") {
   # Get html for the page
   adv_html <- adv_url %>% 
-    read_html()
+    xml2::read_html()
   # Get add if still available
   if(check_adv_available(adv_html)) {
     # Get images if required
@@ -100,12 +90,14 @@ get_adv_images <- function(adv_url, storage_dir = "") {
       if(images[1] != "") {
         download_adv_images_as_jpg(
           images = images,
-          storage_dir = storage_dir,
-          prefix = get_adv_id(adv_url)
+          storage_dir = storage_dir#,
+          # prefix = get_adv_id(adv_url) # update function
         )
       }
     } else {
-      message <- paste0("The indicated storage_dir '",storage_dir,"' does not exist, please specify an existing folder and try again...")
+      message <- paste0("The indicated storage_dir '",
+                        storage_dir,
+                        "' does not exist, please specify an existing folder and try again...")
       stop(message)
     }
   }

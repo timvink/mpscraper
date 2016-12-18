@@ -21,9 +21,4 @@ a search results page.
 The function uses the html of a marktplaats search results page to get the
 url for each of the advertisments on that page.
 }
-\examples{
-
-get_adv_urls_from_page(page_html = read_html('http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953'))
-
-}
 

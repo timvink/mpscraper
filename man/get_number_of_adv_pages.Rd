@@ -21,9 +21,4 @@ advertisements.
 The function scrapes a specified marktplaats url to determine the number of
 results pages with advertisements.
 }
-\examples{
-
-get_number_of_adv_pages(marktplaats_url = 'http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953')
-
-}
 

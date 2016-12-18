@@ -4,10 +4,18 @@
 \alias{scrape_advertisement}
 \title{Scrape advertisement}
 \usage{
-scrape_advertisement(ad_id, verbose = F)
+scrape_advertisement(ad_id, wait_time = 0, number_of_tries = 1,
+  verbose = F)
 }
 \arguments{
-\item{id}{The ID of a marktplaats advertisement}
+\item{ad_id}{The ID of a marktplaats advertisement}
+
+\item{wait_time}{To prevent hammering markplaats with rapid requests, you can
+specify a delay after collecting the data}
+
+\item{number_of_tries}{If scraping fails we can retry more times}
+
+\item{verbose}{Be chatty about data collection?}
 }
 \value{
 a data.frame with features collected from the ad

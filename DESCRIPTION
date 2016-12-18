@@ -6,8 +6,8 @@ Description: Webscraping advertisements from Marktplaats,
     and some more text.
 Authors@R: c(person("Gertjan", "van den Bos", 
     email = "something@someone.com",role = c("aut")),
-	person("Tim", "VInk", 
-	    email = "vinktim@gmail.com",role = c("aut","cre")))
+    person("Tim", "VInk", 
+        email = "vinktim@gmail.com",role = c("aut","cre")))
 LazyData: true
 License: file LICENSE
 Imports:
@@ -15,5 +15,11 @@ Imports:
     dplyr (>= 0.5.0),
     rvest (>= 0.3.2),
     stringr (>= 1.1.0),
-    xml2 (>= 1.0.0)
+    xml2 (>= 1.0.0),
+    purrr,
+    selectr,
+    tibble,
+    stats,
+    XML,
+    utils
 RoxygenNote: 5.0.1

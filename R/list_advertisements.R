@@ -1,4 +1,5 @@
-
+#' @importFrom magrittr "%>%"
+NULL
 
 #' Lists the advertisements listed for a given search url
 #'
@@ -8,8 +9,8 @@
 #' @param max_pages limit the number of pages webscrape. Useful for testing. Default is all pages.
 #'
 #' @return a data frame with title, url and ID of advertisements
-#'
 #' @export
+#' 
 #' @examples
 #' \dontrun{
 #' url <- "http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953&sortBy=SortIndex"
@@ -27,8 +28,7 @@ list_advertisements <- function(url,
   page_urls <- paste0(url,"&currentPage=",1:n_pages)
 
   # Get advs from each page
-  advs_data <- lapply(X = page_urls,FUN = get_advs_overview_from_page)
-  advs_data <- do.call("rbind", advs_data)
+  advs_data <- purrr::map_df(page_urls, get_advs_overview_from_page)
 
   # Remove dublicates and filter business advs
   advs_data <- advs_data %>%

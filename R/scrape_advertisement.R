@@ -1,8 +1,11 @@
+#' @importFrom magrittr "%>%"
+NULL
+
 #' Scrape advertisement
 #'
 #' Collects a set of features from a given advertisement id
 #' 
-#' @param id The ID of a marktplaats advertisement
+#' @param ad_id The ID of a marktplaats advertisement
 #' @param wait_time To prevent hammering markplaats with rapid requests, you can
 #'   specify a delay after collecting the data
 #' @param number_of_tries If scraping fails we can retry more times
@@ -65,7 +68,9 @@ scrape_advertisement <- function(ad_id,
   }
 
   get_number_of_bids <- function() {
-    html <- get_css_element(adv_html, "#vip-list-bids-block .bid", expecting_one = F)
+    html <- get_css_element(adv_html, 
+                            "#vip-list-bids-block .bid", 
+                            expecting_one = F)
     # tests
     # html <- NA
     # html <- c("\n                    Ramon<U+20AC> 310,0010 dec. '16\n                ")
@@ -139,7 +144,7 @@ scrape_advertisement <- function(ad_id,
       stringr::str_replace_all(" ", "_")
 
     ad_data <- ad_data %>%
-      dplyr::mutate_(.dots = setNames(list(~kenmerken$waarde[i]), kenmerk))
+      dplyr::mutate_(.dots = stats::setNames(list(~kenmerken$waarde[i]), kenmerk))
   }
 
   # If you want to use this function to

@@ -1,3 +1,5 @@
+#' @importFrom magrittr "%>%"
+NULL
 
 #' Get the number of pages advs
 #'
@@ -11,11 +13,7 @@
 #'   corresponds to the results of a search for advertisements.
 #'
 #' @return a numeric object.
-#'
-#' @examples
-#'
-#' get_number_of_adv_pages(marktplaats_url = 'http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953')
-#'
+#' 
 get_number_of_adv_pages <- function(marktplaats_url) {
   marktplaats_iphone <- xml2::read_html(marktplaats_url) %>%
     rvest::html_node("a:nth-child(13)") %>%
@@ -35,10 +33,6 @@ get_number_of_adv_pages <- function(marktplaats_url) {
 #'   page.
 #'
 #' @return a vector object containing strings.
-#'
-#' @examples
-#'
-#' get_adv_urls_from_page(page_html = read_html('http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953'))
 #'
 get_adv_urls_from_page <- function(page_html) {
   page_html %>%
@@ -60,11 +54,7 @@ get_adv_urls_from_page <- function(page_html) {
 #'   page.
 #'
 #' @return a vector object containing strings.
-#'
-#' @examples
-#'
-#' get_adv_titles_from_page(page_html = read_html('http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953'))
-#'
+#' 
 get_adv_titles_from_page <- function(page_html) {
   page_html %>%
     rvest::html_nodes(".listing-title-description") %>%
@@ -93,23 +83,17 @@ get_adv_titles_from_page <- function(page_html) {
 #'
 #' @return a data.frame object, with columns 'title', 'url' and 'adv_id' and one
 #'   row per advertisement.
-#'
-#' @examples
-#'
-#' combine_adv_info_from_page(
-#'    titles = c("Adv A","Adv B"),
-#'    urls = c("https://url_A","https://url_B")
-#' )
-#'
+#' 
 combine_adv_info_from_page <- function(titles, urls, filter_admarkt = TRUE) {
+  
   if(length(titles) == length(urls) & length(titles) > 0 ) {
     adv_info <- data.frame(
-      title = titles,
+      title = as.character(titles),
       url = urls
     ) %>%
       dplyr::mutate(
-        url = stringr::str_replace(url,"html?.*","html"),
-        adv_id = stringr::str_extract(url,'[am][0-9]{1,10}')
+        url = as.character(stringr::str_replace(url,"html?.*","html")),
+        adv_id = as.character(stringr::str_extract(url,'[am][0-9]{1,10}'))
       )
     # Filter admarkt advs if required
     if(filter_admarkt) {
@@ -145,14 +129,7 @@ combine_adv_info_from_page <- function(titles, urls, filter_admarkt = TRUE) {
 #' @return a data.frame object, with columns 'title', 'url' and 'adv_id' and one
 #'   row per advertisement.
 #'
-#' @export
-#' @examples
-#'
-#' get_advs_overview_from_page(
-#'    titles = c("Adv A","Adv B"),
-#'    urls = c("https://url_A","https://url_B")
-#' )
-#'
+#' 
 get_advs_overview_from_page <- function(page_url, filter_admarkt = TRUE, verbose = TRUE) {
   # Get html for the page
   page_html <- page_url %>%
