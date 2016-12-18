@@ -9,6 +9,7 @@
 #'
 #' @return a data frame with title, url and ID of advertisements
 #'
+#' @export
 #' @examples
 #' \dontrun{
 #' url <- "http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iphone/iphone.html?query=iphone&categoryId=1953&sortBy=SortIndex"

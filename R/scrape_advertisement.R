@@ -1,18 +1,42 @@
 #' Scrape advertisement
 #'
 #' Collects a set of features from a given advertisement id
-#'
+#' 
 #' @param id The ID of a marktplaats advertisement
-#'
+#' @param wait_time To prevent hammering markplaats with rapid requests, you can
+#'   specify a delay after collecting the data
+#' @param number_of_tries If scraping fails we can retry more times
+#' @param verbose Be chatty about data collection?
+#'   
 #' @return a data.frame with features collected from the ad
 #' @export
-#'
-scrape_advertisement <- function(ad_id, verbose = F) {
+#' 
+scrape_advertisement <- function(ad_id, 
+                                 wait_time = 0,
+                                 number_of_tries = 1,
+                                 verbose = F) {
 
   if(verbose) print(sprintf("%s: Scraping advertisement %s", Sys.time(), ad_id))
+  stopifnot(number_of_tries > 0)
+  
   # Get html for the page
-  adv_html <- sprintf("http://marktplaats.nl/%s", ad_id) %>% xml2::read_html()
-
+  get_adv_html <- function(ad_id) {
+    result <- try(xml2::read_html(sprintf("http://marktplaats.nl/%s", ad_id)), silent = T)
+    return(result)
+  }
+  
+  # retry if there are connection problems
+  for(i in 1:number_of_tries) {
+    adv_html <- get_adv_html(ad_id)
+    if(any(class(adv_html) == "try-error")) {
+      if(i == number_of_tries) return(NULL) # failed, just return a null
+      Sys.sleep(min(i^2,20)) # wait for a bit (1, 4, 9, 16, 20, 20)
+      next
+    } else {
+      break
+    }
+  }
+  
   # Only get add if still available
   if(!check_adv_available(adv_html)) return()
 
@@ -118,6 +142,12 @@ scrape_advertisement <- function(ad_id, verbose = F) {
       dplyr::mutate_(.dots = setNames(list(~kenmerken$waarde[i]), kenmerk))
   }
 
+  # If you want to use this function to
+  # scrape lots of ads, you might want to 
+  # add a bit of delay to prevent hammering
+  # the server and possibly losing your connection
+  Sys.sleep(wait_time)
+  
   return(ad_data)
 
 }

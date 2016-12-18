@@ -12,7 +12,6 @@
 #'   
 #' @return a vector object containing strings.
 #'   
-#' @export
 #' @examples
 #' \dontrun{
 #' get_urls_to_adv_images(html = read_html('http://www.marktplaats.nl/a/telecommunicatie/mobiele-telefoons-apple-iphone/m1106778417-apple-telefoon-4s.html'))
@@ -44,7 +43,6 @@ get_urls_to_adv_images <- function(html) {
 #'   
 #' @return No return.
 #'   
-#' @export
 #' @examples
 #' \dontrun{
 #' download_adv_images_as_jpg(
@@ -83,7 +81,6 @@ download_adv_images_as_jpg <- function(images,storage_dir,prefix) {
 #'   
 #' @return No return.
 #'   
-#' @export
 #' @examples
 #' \dontrun{
 #' get_adv_images(

@@ -18,7 +18,6 @@
 #'
 #' @return a character/numeric or vector object.
 #'
-#' @export
 #' @examples
 #' \dontrun{
 #' get_css_element(
