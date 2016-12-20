@@ -36,7 +36,7 @@ scrape_advertisement <- function(ad_id,
 
     # If page not found, state that ad is closed.
     if(any(grepl("HTTP error 404", adv_html)))
-      return(tibble::tibble(id = ad_id, closed = 1))
+      return(tibble::tibble(ad_id = ad_id, closed = 1))
 
     # If a connection problem persists for 'number_of_tries' times, return NULL
     if(any(class(adv_html) == "try-error")) {
@@ -102,7 +102,7 @@ scrape_advertisement <- function(ad_id,
   }
 
   # Get details and return
-  ad_data <- tibble::data_frame(id = ad_id) %>%
+  ad_data <- tibble::data_frame(ad_id = ad_id) %>%
     dplyr::mutate(
       time_retrieved = Sys.time(),
       title = get_css_element(adv_html, "#title"),

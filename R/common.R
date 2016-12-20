@@ -194,7 +194,7 @@ get_adv_titles_from_page <- function(page_html) {
 #' @param filter_admarkt Boolean indicating whether admarkt advertisements need
 #'   to be filtered.
 #'
-#' @return a data.frame object, with columns 'title', 'url' and 'adv_id' and one
+#' @return a data.frame object, with columns 'title', 'url' and 'ad_id' and one
 #'   row per advertisement.
 #'
 combine_adv_info_from_page <- function(titles, urls, filter_admarkt = TRUE) {
@@ -206,7 +206,7 @@ combine_adv_info_from_page <- function(titles, urls, filter_admarkt = TRUE) {
     ) %>%
       dplyr::mutate(
         url = as.character(stringr::str_replace(url,"html?.*","html")),
-        adv_id = as.character(stringr::str_extract(url,'[am][0-9]{1,10}'))
+        ad_id = as.character(stringr::str_extract(url,'[am][0-9]{1,10}'))
       )
     # Filter admarkt advs if required
     if(filter_admarkt) {
@@ -239,7 +239,7 @@ combine_adv_info_from_page <- function(titles, urls, filter_admarkt = TRUE) {
 #' @param verbose Boolean indicating whether information on the progress should
 #'   be printed during execution.
 #'
-#' @return a data.frame object, with columns 'title', 'url' and 'adv_id' and one
+#' @return a data.frame object, with columns 'title', 'url' and 'ad_id' and one
 #'   row per advertisement.
 #'
 #'
