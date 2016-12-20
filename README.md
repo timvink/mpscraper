@@ -42,6 +42,7 @@ Note that you can find the URL of an ad using the id: `http://www.marktplaats.nl
 - shipping information
 - shipping costs
 - reserved
+- number_of_photos
 - categories 1,2,3
 - counterparty name
 - counterparty id

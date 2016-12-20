@@ -48,8 +48,8 @@ scrape_advertisement <- function(ad_id,
     }
   }
 
-  # Only get add if still available
-  if(!check_adv_available(adv_html)) return()
+  # If we get an ad not found page, return NULL
+  if(!check_adv_available(adv_html)) return(NULL)
 
   # Get categories
   get_categories <- function() {
@@ -113,6 +113,7 @@ scrape_advertisement <- function(ad_id,
       shipping = get_css_element(adv_html, ".shipping-details-value:nth-child(2)"),
       shipping_costs = get_css_element(adv_html, ".l-top-content .price", expecting_one = F)[2],
       reserved = get_css_element(adv_html, ".reserved-label"),
+      number_of_photos = get_urls_to_adv_images(adv_html) %>% length,
       category_1 = categories[1],
       category_2 = categories[2],
       category_3 = categories[3],
