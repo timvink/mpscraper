@@ -4,6 +4,13 @@ NULL
 #' @importFrom magrittr "%>%"
 NULL
 
+
+valid_ad_id <- function(ad_id) {
+  grepl("[mM|aA][0-9]{9}", ad_id)
+}
+
+
+
 #' Get css element from html page
 #'
 #' \code{get_css_element} gets a specific css element from a html page.
@@ -119,7 +126,7 @@ NULL
 #'   corresponds to the results of a search for advertisements.
 #'
 #' @return a numeric object.
-#' 
+#'
 get_number_of_adv_pages <- function(marktplaats_url) {
   marktplaats_iphone <- xml2::read_html(marktplaats_url) %>%
     rvest::html_node("a:nth-child(13)") %>%
@@ -160,7 +167,7 @@ get_adv_urls_from_page <- function(page_html) {
 #'   page.
 #'
 #' @return a vector object containing strings.
-#' 
+#'
 get_adv_titles_from_page <- function(page_html) {
   page_html %>%
     rvest::html_nodes(".listing-title-description") %>%
@@ -189,9 +196,9 @@ get_adv_titles_from_page <- function(page_html) {
 #'
 #' @return a data.frame object, with columns 'title', 'url' and 'adv_id' and one
 #'   row per advertisement.
-#' 
+#'
 combine_adv_info_from_page <- function(titles, urls, filter_admarkt = TRUE) {
-  
+
   if(length(titles) == length(urls) & length(titles) > 0 ) {
     adv_info <- data.frame(
       title = as.character(titles),
@@ -235,7 +242,7 @@ combine_adv_info_from_page <- function(titles, urls, filter_admarkt = TRUE) {
 #' @return a data.frame object, with columns 'title', 'url' and 'adv_id' and one
 #'   row per advertisement.
 #'
-#' 
+#'
 get_advs_overview_from_page <- function(page_url, filter_admarkt = TRUE, verbose = TRUE) {
   # Get html for the page
   page_html <- page_url %>%

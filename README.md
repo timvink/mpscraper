@@ -57,6 +57,7 @@ Note that you can find the URL of an ad using the id: `http://www.marktplaats.nl
 - biddings lowest
 - biddings number of unique bidders
 - product attributes
+- closed (0 for open and 1 for closed)
 
 ## Contribute
 
