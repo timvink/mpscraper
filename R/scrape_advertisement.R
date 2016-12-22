@@ -35,8 +35,7 @@ scrape_advertisement <- function(ad_id,
     adv_html <- get_adv_html(ad_id)
 
     # If page not found, state that ad is closed.
-    if(any(grepl("HTTP error 404", adv_html)))
-      return(tibble::tibble(ad_id = ad_id, closed = 1))
+    if(any(grepl("HTTP error 404", adv_html))) return(tibble::tibble(ad_id = ad_id, closed = 1))
 
     # If a connection problem persists for 'number_of_tries' times, return NULL
     if(any(class(adv_html) == "try-error")) {
@@ -48,8 +47,8 @@ scrape_advertisement <- function(ad_id,
     }
   }
 
-  # If we get an ad not found page, return NULL
-  if(!check_adv_available(adv_html)) return(NULL)
+  # If we get an ad not available anymore, return add as closed
+  if(!check_adv_available(adv_html)) return(tibble::tibble(ad_id = ad_id, closed = 1))
 
   # Get categories
   get_categories <- function() {
