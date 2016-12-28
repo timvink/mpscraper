@@ -8,6 +8,7 @@ If you want to analyse your own advertisements, you could consider the [official
 ## Installation
 
 ```r 
+# install.packages("devtools")
 devtools::install_github("timvink/mpscraper")
 ```
 
