@@ -4,44 +4,51 @@ NULL
 #' Scrape advertisement
 #'
 #' Collects a set of features from a given advertisement id
-#' 
+#'
 #' @param ad_id The ID of a marktplaats advertisement
 #' @param wait_time To prevent hammering markplaats with rapid requests, you can
 #'   specify a delay after collecting the data
 #' @param number_of_tries If scraping fails we can retry more times
 #' @param verbose Be chatty about data collection?
-#'   
+#'
 #' @return a data.frame with features collected from the ad
 #' @export
-#' 
+#'
 scrape_advertisement <- function(ad_id,
                                  wait_time = 0,
                                  number_of_tries = 1,
                                  verbose = F) {
 
+  stopifnot(all(valid_ad_id(ad_id)))
+
   if(verbose) print(sprintf("%s: Scraping advertisement %s", Sys.time(), ad_id))
   stopifnot(number_of_tries > 0)
-  
+
   # Get html for the page
   get_adv_html <- function(ad_id) {
-    result <- try(xml2::read_html(sprintf("http://marktplaats.nl/%s", ad_id)), silent = T)
+    result <- try(xml2::read_html(sprintf("http://www.marktplaats.nl/%s", ad_id)), silent = T)
     return(result)
   }
-  
+
   # retry if there are connection problems
   for(i in 1:number_of_tries) {
     adv_html <- get_adv_html(ad_id)
+
+    # If page not found, state that ad is closed.
+    if(any(grepl("HTTP error 404", adv_html))) return(tibble::tibble(ad_id = ad_id, closed = 1))
+
+    # If a connection problem persists for 'number_of_tries' times, return NULL
     if(any(class(adv_html) == "try-error")) {
-      if(i == number_of_tries) return(NULL) # failed, just return a null
+      if(i == number_of_tries) return(NULL)
       Sys.sleep(min(i^2,20)) # wait for a bit (1, 4, 9, 16, 20, 20)
       next
     } else {
       break
     }
   }
-  
-  # Only get add if still available
-  if(!check_adv_available(adv_html)) return()
+
+  # If we get an ad not available anymore, return add as closed
+  if(!check_adv_available(adv_html)) return(tibble::tibble(ad_id = ad_id, closed = 1))
 
   # Get categories
   get_categories <- function() {
@@ -68,8 +75,8 @@ scrape_advertisement <- function(ad_id,
   }
 
   get_number_of_bids <- function() {
-    html <- get_css_element(adv_html, 
-                            "#vip-list-bids-block .bid", 
+    html <- get_css_element(adv_html,
+                            "#vip-list-bids-block .bid",
                             expecting_one = F)
     # tests
     # html <- NA
@@ -94,9 +101,9 @@ scrape_advertisement <- function(ad_id,
   }
 
   # Get details and return
-  ad_data <- tibble::data_frame(id = ad_id) %>%
+  ad_data <- tibble::data_frame(ad_id = ad_id) %>%
     dplyr::mutate(
-      time_retrieved = Sys.time(), 
+      time_retrieved = Sys.time(),
       title = get_css_element(adv_html, "#title"),
       price = get_css_element(adv_html, "#vip-ad-price-container .price"),
       views = get_css_element(adv_html, "#view-count", as_numeric = TRUE),
@@ -105,6 +112,7 @@ scrape_advertisement <- function(ad_id,
       shipping = get_css_element(adv_html, ".shipping-details-value:nth-child(2)"),
       shipping_costs = get_css_element(adv_html, ".l-top-content .price", expecting_one = F)[2],
       reserved = get_css_element(adv_html, ".reserved-label"),
+      number_of_photos = get_urls_to_adv_images(adv_html) %>% length,
       category_1 = categories[1],
       category_2 = categories[2],
       category_3 = categories[3],
@@ -122,7 +130,8 @@ scrape_advertisement <- function(ad_id,
       biddings_highest_bid = get_biddings()$bid %>% max,
       biddings_lowest_bid = get_biddings()$bid %>% min,
       biddings_unique_bidders = get_biddings()$bidder %>% dplyr::n_distinct(),
-      description = get_css_element(adv_html, "#vip-ad-description")
+      description = get_css_element(adv_html, "#vip-ad-description"),
+      closed = 0
     )
 
   # Get kenmerken
@@ -149,11 +158,11 @@ scrape_advertisement <- function(ad_id,
   }
 
   # If you want to use this function to
-  # scrape lots of ads, you might want to 
+  # scrape lots of ads, you might want to
   # add a bit of delay to prevent hammering
   # the server and possibly losing your connection
   Sys.sleep(wait_time)
-  
+
   return(ad_data)
 
 }

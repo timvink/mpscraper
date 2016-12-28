@@ -4,6 +4,13 @@ NULL
 #' @importFrom magrittr "%>%"
 NULL
 
+
+valid_ad_id <- function(ad_id) {
+  grepl("[mM|aA][0-9]{9}", ad_id)
+}
+
+
+
 #' Get css element from html page
 #'
 #' \code{get_css_element} gets a specific css element from a html page.
@@ -119,7 +126,7 @@ NULL
 #'   corresponds to the results of a search for advertisements.
 #'
 #' @return a numeric object.
-#' 
+#'
 get_number_of_adv_pages <- function(marktplaats_url) {
   marktplaats_iphone <- xml2::read_html(marktplaats_url) %>%
     rvest::html_node("a:nth-child(13)") %>%
@@ -160,59 +167,12 @@ get_adv_urls_from_page <- function(page_html) {
 #'   page.
 #'
 #' @return a vector object containing strings.
-#' 
+#'
 get_adv_titles_from_page <- function(page_html) {
   page_html %>%
     rvest::html_nodes(".listing-title-description") %>%
     rvest::html_nodes(".mp-listing-title") %>%
     rvest::html_attr("title")
-}
-
-
-
-#' Combine adv info from a page
-#'
-#' \code{combine_adv_info_from_page} combines the titles and urls of
-#' advertisements from a search results page.
-#'
-#' The function combines vectors of advertisement titles and urls into a
-#' data.frame object, while also extracting the advertisement ids from the urls
-#' and optionally filtering admarkt advertisements (which are payed
-#' advertisements from companies)
-#'
-#' @param titles Vector object containing strings corresponding to advertisement
-#'   titles.
-#' @param urls Vector object containing strings corresponding to advertisement
-#'   urls.
-#' @param filter_admarkt Boolean indicating whether admarkt advertisements need
-#'   to be filtered.
-#'
-#' @return a data.frame object, with columns 'title', 'url' and 'adv_id' and one
-#'   row per advertisement.
-#' 
-combine_adv_info_from_page <- function(titles, urls, filter_admarkt = TRUE) {
-  
-  if(length(titles) == length(urls) & length(titles) > 0 ) {
-    adv_info <- data.frame(
-      title = as.character(titles),
-      url = urls
-    ) %>%
-      dplyr::mutate(
-        url = as.character(stringr::str_replace(url,"html?.*","html")),
-        adv_id = as.character(stringr::str_extract(url,'[am][0-9]{1,10}'))
-      )
-    # Filter admarkt advs if required
-    if(filter_admarkt) {
-      adv_info %>%
-        dplyr::filter(!grepl("admarkt.marktplaats.nl",url)) %>%
-        return()
-    } else {
-      return(adv_info)
-    }
-  } else {
-    message <- paste0("Length of titles (",length(titles),") is not equal to length of urls (",length(urls),"), please have a look at the functions creating these vectors")
-    stop(message)
-  }
 }
 
 #' Get info on all advs on a page
@@ -232,26 +192,28 @@ combine_adv_info_from_page <- function(titles, urls, filter_admarkt = TRUE) {
 #' @param verbose Boolean indicating whether information on the progress should
 #'   be printed during execution.
 #'
-#' @return a data.frame object, with columns 'title', 'url' and 'adv_id' and one
+#' @return a data.frame object, with columns 'title', 'url' and 'ad_id' and one
 #'   row per advertisement.
 #'
-#' 
+#'
 get_advs_overview_from_page <- function(page_url, filter_admarkt = TRUE, verbose = TRUE) {
   # Get html for the page
-  page_html <- page_url %>%
-    xml2::read_html()
-  # Get adv urls
-  page_adv_urls <- page_html %>%
-    get_adv_urls_from_page()
-  # Get adv titles
-  page_adv_titles <- page_html %>%
-    get_adv_titles_from_page()
-  # Combine titles and urls and return
-  adv_info <- combine_adv_info_from_page(
-    titles = page_adv_titles,
-    urls = page_adv_urls,
-    filter_admarkt = filter_admarkt
-  )
+  page_html <- xml2::read_html(page_url)
+
+  adv_info <- tibble::tibble(
+    title = get_adv_titles_from_page(page_html),
+    url = get_adv_urls_from_page(page_html)
+  ) %>%
+    dplyr::mutate(
+      url = as.character(stringr::str_replace(url,"html?.*","html")),
+      ad_id = as.character(stringr::str_extract(url,'[am][0-9]{1,10}'))
+    )
+
+  if(filter_admarkt) {
+    adv_info <- adv_info %>%
+      dplyr::filter(!grepl("admarkt.marktplaats.nl",url))
+  }
+
   # Message
   if(verbose) print(paste0("Scraped ",dim(adv_info)[1]," advertisements from page ",sub('.*currentPage=(.*).*','\\1',page_url)))
   # Return results

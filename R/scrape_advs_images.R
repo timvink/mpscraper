@@ -91,7 +91,7 @@ get_adv_images <- function(adv_url, storage_dir = "") {
         download_adv_images_as_jpg(
           images = images,
           storage_dir = storage_dir#,
-          # prefix = get_adv_id(adv_url) # update function
+          # prefix = get_ad_id(adv_url) # update function
         )
       }
     } else {

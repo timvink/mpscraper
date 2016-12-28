@@ -33,11 +33,11 @@ list_advertisements <- function(url,
   # Remove dublicates and filter business advs
   advs_data <- advs_data %>%
     dplyr::distinct(.keep_all = T) %>%
-    dplyr::arrange(desc(adv_id))
+    dplyr::arrange(desc(ad_id))
 
   switch(advertisement_type,
          both = advs_data,
-         individuals = dplyr::filter(advs_data, grepl("m",adv_id)),
-         companies = dplyr::filter(advs_data, grepl("a",adv_id)))
+         individuals = dplyr::filter(advs_data, grepl("m",ad_id)),
+         companies = dplyr::filter(advs_data, grepl("a",ad_id)))
 
 }

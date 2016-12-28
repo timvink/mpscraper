@@ -26,7 +26,7 @@ url <- "http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iph
 ads <- list_advertisements(url, advertisement_type = "individuals", max_pages = 5)
 
 # Build a dataset with the details from all the adds
-all_ad_data <- scrape_ads(ads$adv_id)
+all_ad_data <- scrape_ads(ads$ad_id)
 ```
 
 Note that you can find the URL of an ad using the id: `http://www.marktplaats.nl/<id>`.
@@ -43,6 +43,7 @@ Note that you can find the URL of an ad using the id: `http://www.marktplaats.nl
 - shipping information
 - shipping costs
 - reserved
+- number_of_photos
 - categories 1,2,3
 - counterparty name
 - counterparty id
@@ -58,6 +59,7 @@ Note that you can find the URL of an ad using the id: `http://www.marktplaats.nl
 - biddings lowest
 - biddings number of unique bidders
 - product attributes
+- closed (0 for open and 1 for closed)
 
 ## Contribute
 
