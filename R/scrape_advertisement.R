@@ -152,12 +152,9 @@ scrape_advertisement <- function(ad_id,
     kenmerk <- kenmerken$kenmerk[i] %>%
       tolower() %>%
       stringr::str_replace_all(" ", "_")
-    
-    # Filter useless kenmerk which is almost never present...
-    if(kenmerk != "moet_nu_weg") {
-      ad_data <- ad_data %>%
-        dplyr::mutate_(.dots = stats::setNames(list(~kenmerken$waarde[i]), kenmerk))      
-    }
+
+    ad_data <- ad_data %>%
+      dplyr::mutate_(.dots = stats::setNames(list(~kenmerken$waarde[i]), kenmerk))
   }
 
   # If you want to use this function to
