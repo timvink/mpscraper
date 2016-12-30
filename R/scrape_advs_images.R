@@ -64,24 +64,35 @@ download_adv_images_as_jpg <- function(images,storage_dir,prefix) {
   }
 }
 
-#' Get adv images
+#' Scrape adv images
 #' 
-#' \code{get_adv_images} downloads and stores all images used in the 
+#' \code{scrape_adv_images} downloads and stores all images used in the 
 #' advertisement indicated in the specified url.
 #' 
 #' The function uses a string containing the url to an advertisement to download
 #' and store all images linked to that advertisement.
 #' 
-#' @param adv_url String containing the url to an advertisement.
+#' @param ad_id String containing the url to an advertisement.
 #' @param storage_dir String indicating the storage location for the downloaded 
 #'   images.
 #'   
 #' @return No return.
+#' @export
 #' 
-get_adv_images <- function(adv_url, storage_dir = "") {
+#' @examples
+#' \dontrun{
+#' scrape_adv_images(ad_id = "m1016608065", storage_dir = "C:/")
+#' }
+  scrape_adv_images <- function(ad_id, storage_dir = "") {
+  
   # Get html for the page
-  adv_html <- adv_url %>% 
-    xml2::read_html()
+  get_adv_html <- function(ad_id) {
+    result <- try(xml2::read_html(sprintf("http://www.marktplaats.nl/%s", ad_id)), silent = T)
+    return(result)
+  }
+  
+  # Get html for the page
+  adv_html <- get_adv_html(ad_id)
   # Get add if still available
   if(check_adv_available(adv_html)) {
     # Get images if required
@@ -90,8 +101,8 @@ get_adv_images <- function(adv_url, storage_dir = "") {
       if(images[1] != "") {
         download_adv_images_as_jpg(
           images = images,
-          storage_dir = storage_dir#,
-          # prefix = get_ad_id(adv_url) # update function
+          storage_dir = storage_dir,
+          prefix = ad_id
         )
       }
     } else {

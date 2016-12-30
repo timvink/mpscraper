@@ -16,6 +16,7 @@ devtools::install_github("timvink/mpscraper")
 - `list_advertisements(url)`: Scrapes a given markplaats search url and returns the list of advertisements (incl ad_id) for all search result pages.
 - `scrape_advertisement(ad_id)`: Collects a set of features from a given advertisement id
 - `scrape_ads(ad_ids)`: Collects a set of features from a vector of advertisement ids
+- `scrape_adv_images(ad_id)`: Collects the available images for a single advertisement id
 
 ## Example use case
 
