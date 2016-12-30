@@ -6,7 +6,7 @@ NULL
 
 
 valid_ad_id <- function(ad_id) {
-  grepl("[mM|aA][0-9]{9}", ad_id)
+  stringr::str_detect(ad_id, "^[mM|aA]{1}[0-9]{10}$")
 }
 
 

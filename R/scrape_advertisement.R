@@ -19,33 +19,7 @@ scrape_advertisement <- function(ad_id,
                                  number_of_tries = 1,
                                  verbose = F) {
 
-  stopifnot(all(valid_ad_id(ad_id)))
-
-  if(verbose) print(sprintf("%s: Scraping advertisement %s", Sys.time(), ad_id))
-  stopifnot(number_of_tries > 0)
-
-  # Get html for the page
-  get_adv_html <- function(ad_id) {
-    result <- try(xml2::read_html(sprintf("http://www.marktplaats.nl/%s", ad_id)), silent = T)
-    return(result)
-  }
-
-  # retry if there are connection problems
-  for(i in 1:number_of_tries) {
-    adv_html <- get_adv_html(ad_id)
-
-    # If page not found, state that ad is closed.
-    if(any(grepl("HTTP error 404", adv_html))) return(tibble::tibble(ad_id = ad_id, closed = 1))
-
-    # If a connection problem persists for 'number_of_tries' times, return NULL
-    if(any(class(adv_html) == "try-error")) {
-      if(i == number_of_tries) return(NULL)
-      Sys.sleep(min(i^2,20)) # wait for a bit (1, 4, 9, 16, 20, 20)
-      next
-    } else {
-      break
-    }
-  }
+  adv_html <- get_advertisement_xml(ad_id, wait_time, number_of_tries, verbose)
 
   # If we get an ad not available anymore, return add as closed
   if(!check_adv_available(adv_html)) return(tibble::tibble(ad_id = ad_id, closed = 1))
