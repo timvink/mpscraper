@@ -2,5 +2,6 @@
 
 export(list_advertisements)
 export(scrape_ads)
+export(scrape_adv_images)
 export(scrape_advertisement)
 importFrom(magrittr,"%>%")
