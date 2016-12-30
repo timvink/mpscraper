@@ -8,8 +8,6 @@ NULL
 #'
 #' @inheritParams scrape_advertisement
 #' @param include_hash Use pHash algoritm to hash image
-#' @param storage_dir String indicating the storage location for the downloaded 
-#'   images.
 #'
 #' @return a dataframe
 #'

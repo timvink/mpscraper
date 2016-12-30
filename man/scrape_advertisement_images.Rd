@@ -18,9 +18,6 @@ specify a delay after collecting the data}
 \item{verbose}{Be chatty about data collection?}
 
 \item{include_hash}{Use pHash algoritm to hash image}
-
-\item{storage_dir}{String indicating the storage location for the downloaded 
-images.}
 }
 \value{
 a dataframe
