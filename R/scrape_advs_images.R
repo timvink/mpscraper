@@ -15,13 +15,18 @@ NULL
 #' @return a vector object containing strings.
 #'   
 get_urls_to_adv_images <- function(html) {
-  html %>% 
+  adv_urls <- html %>% 
     rvest::html_nodes("#vip-gallery") %>% 
     rvest::html_nodes(".carousel") %>% 
     rvest::html_attr("data-images-l") %>% 
     stringr::str_split("&") %>% 
-    unlist() %>% 
-    return()
+    unlist()
+  
+  if(all(adv_urls == "")) {
+    return(NULL)
+  } else {
+    return(adv_urls)
+  }
 }
 
 #' Download adv images as jpg
