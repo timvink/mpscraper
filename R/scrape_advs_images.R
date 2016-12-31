@@ -103,7 +103,7 @@ download_adv_images_as_jpg <- function(images,storage_dir,prefix) {
     # Get images if required
     if(dir.exists(storage_dir)) {
       images <- get_urls_to_adv_images(adv_html)
-      if(images[1] != "") {
+      if(!is.null(images)) {
         download_adv_images_as_jpg(
           images = images,
           storage_dir = storage_dir,
