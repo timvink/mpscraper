@@ -101,14 +101,15 @@ get_n_of_advs_of_counterparty <- function(html) {
 #' @return a boolean.
 #'
 check_adv_available <- function(html) {
-  not_found <- html %>%
-    rvest::html_nodes(".evip-caption") %>%
-    rvest::html_text()
-  if(identical(not_found, character(0))) {
-    return(TRUE)
-  } else {
-    return(FALSE)
+  if(all(grepl("xml",class(html)))) {
+    not_found <- html %>%
+      rvest::html_nodes(".evip-caption") %>%
+      rvest::html_text()
+    if(identical(not_found, character(0))) {
+      return(TRUE)
+    }
   }
+  return(FALSE)
 }
 
 #' @importFrom magrittr "%>%"
