@@ -12,7 +12,12 @@ scrape_ads <- function(ad_ids,
                        ads_per_minute = Inf,
                        report_every_nth_scrape = 10,
                        number_of_tries = 2) {
-
+  
+  # Return empty data.frame if ad_ids is empty
+  if(length(ad_ids) == 0) {
+    return(data.frame())
+  } 
+  
   # determine delays
   if(ads_per_minute == Inf) {
     delay_times <- 0
