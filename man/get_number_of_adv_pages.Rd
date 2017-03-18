@@ -21,4 +21,3 @@ advertisements.
 The function scrapes a specified marktplaats url to determine the number of
 results pages with advertisements.
 }
-

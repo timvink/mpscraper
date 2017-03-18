@@ -27,4 +27,3 @@ url <- "http://www.marktplaats.nl/z/telecommunicatie/mobiele-telefoons-apple-iph
 list_advertisements(url, advertisement_type = "individuals", max_pages = 5)
 }
 }
-

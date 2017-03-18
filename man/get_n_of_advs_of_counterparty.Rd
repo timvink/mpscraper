@@ -22,4 +22,3 @@ The function uses the html of a marktplaats advertisement to get the total
 number of advertisements that the counterparty of the advertisement is
 hosting on marktplaats.
 }
-

@@ -21,4 +21,3 @@ available on marktplaats.
 The function uses the html of a marktplaats advertisement to determine
 whether the advertisement is still available or whether it has been removed.
 }
-

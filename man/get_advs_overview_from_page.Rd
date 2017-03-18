@@ -30,4 +30,3 @@ results page. For each advertisement on the page, the title and url are
 scraped and the advertisement id is extracted from the url. The results are
 combined into a data.frame and returned.
 }
-

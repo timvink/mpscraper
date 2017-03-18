@@ -21,4 +21,3 @@ a search results page.
 The function uses the html of a marktplaats search results page to get the
 url for each of the advertisments on that page.
 }
-

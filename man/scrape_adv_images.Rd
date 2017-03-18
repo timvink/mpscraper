@@ -28,4 +28,3 @@ and store all images linked to that advertisement.
 scrape_adv_images(ad_id = "m1016608065", storage_dir = "C:/")
 }
 }
-

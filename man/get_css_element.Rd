@@ -32,4 +32,3 @@ a character/numeric or vector object.
 The function uses a css string to extract information from a specific html
 node of a html page.
 }
-

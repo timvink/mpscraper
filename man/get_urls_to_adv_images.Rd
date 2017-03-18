@@ -21,4 +21,3 @@ advertisement.
 The function uses the html of a marktplaats advertisement to get the 
 url for each of images linked to that advertisment.
 }
-

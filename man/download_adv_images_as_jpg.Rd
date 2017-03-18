@@ -27,4 +27,3 @@ The function uses a vector of urls corresponding to images used in an
 advertisement, to loop over each url to download the image and store it in 
 the specified directory.
 }
-

@@ -22,4 +22,3 @@ data.frame with features from the ads
 \description{
 scrape_ads
 }
-

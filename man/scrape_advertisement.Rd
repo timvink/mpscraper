@@ -23,4 +23,3 @@ a data.frame with features collected from the ad
 \description{
 Collects a set of features from a given advertisement id
 }
-
