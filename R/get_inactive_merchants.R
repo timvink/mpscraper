@@ -23,7 +23,9 @@ get_n_current_advs_of_merchant <- function(merchant_id,
 
     # If page not found, state that ad is closed.
     if (any(grepl("HTTP error 404", merchant_html) | grepl("HTTP error 410", merchant_html))) return("Removed")
-
+    # If request invalid.
+    if (any(grepl("HTTP error 400", merchant_html)) return("Invalid request")
+    
     # If a connection problem persists for 'number_of_tries' times, return NULL
     if (any(class(merchant_html) == "try-error")) {
       if (i == n_tries) return(NULL)
