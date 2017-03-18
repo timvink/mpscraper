@@ -3,7 +3,7 @@ NULL
 
 #' Get the number of current advertisements of a merchant
 #'
-#' @param ad_id The ID of a marktplaats merchant (a.k.a. counterparty)
+#' @param merchant_id The ID of a marktplaats merchant (a.k.a. counterparty)
 #' @param n_tries If scraping fails we can retry more times
 #'
 #' @return a character string

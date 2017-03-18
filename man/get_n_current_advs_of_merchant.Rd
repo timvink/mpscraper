@@ -7,9 +7,9 @@
 get_n_current_advs_of_merchant(merchant_id, n_tries = 3)
 }
 \arguments{
-\item{n_tries}{If scraping fails we can retry more times}
+\item{merchant_id}{The ID of a marktplaats merchant (a.k.a. counterparty)}
 
-\item{ad_id}{The ID of a marktplaats merchant (a.k.a. counterparty)}
+\item{n_tries}{If scraping fails we can retry more times}
 }
 \value{
 a character string
