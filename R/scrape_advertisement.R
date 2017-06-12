@@ -52,7 +52,7 @@ scrape_advertisement <- function(ad_id,
 
   # Get categories
   get_categories <- function() {
-    get_css_element(adv_html, ".breadcrumbs .with-right-triangle", expecting_one = FALSE) %>%
+    get_css_element(adv_html, ".crumb a span", expecting_one = FALSE) %>%
       stringr::str_replace_all("\\n|  ", "") %>%
       stringr::str_replace_all(" $", "") %>%
       purrr::discard(~ .x == "Home") %>%

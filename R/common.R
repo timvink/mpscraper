@@ -79,7 +79,7 @@ get_n_of_advs_of_counterparty <- function(html) {
   # Filter correct url and get number of advs
   n_advs <- urls[grepl("/verkopers/",urls)] %>%
     xml2::read_html() %>%
-    rvest::html_nodes("#soi-breadcrumbs-content li:nth-child(2) span") %>%
+    rvest::html_nodes("span.crumb") %>%
     rvest::html_text()
   # Extract value
   stringr::str_extract(n_advs,"[0-9]*") %>%
